@@ -1,42 +1,71 @@
 services:
-  backend:
-    # Build from local Dockerfile in dev, skip in prod
-    build:
-      context: .
-      dockerfile: packages/fastify/Dockerfile
-    # Use local image for dev, use remote image in prod
-    image: ${BACKEND_IMAGE:?need BACKEND_IMAGE}
-    expose:
-      - "3000"
-    environment:
-      - NODE_ENV=production
-    restart: unless-stopped
+  traefik:
+    image: traefik:v2.10
+    container_name: traefik
+    command:
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.letsencrypt.acme.email=${ACME_EMAIL:?need ACME_EMAIL}"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+      - "--api.dashboard=true"
+      - "--log.level=INFO"
+      - "--accesslog=true"
+      - "--api.insecure=true"  # ← Add this line
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"  # ← Add this port
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./letsencrypt:/letsencrypt
     networks:
-      - internal
+      - web
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dashboard.rule=Host(`traefik.${DOMAIN:?need DOMAIN}`)"
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
+      - "traefik.http.routers.dashboard.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      - "traefik.http.routers.dashboard.middlewares=dashboard-auth"
+      - "traefik.http.middlewares.dashboard-auth.basicauth.users=${DASHBOARD_AUTH:?need DASHBOARD_AUTH}"
 
-  frontend:
-    # Build from local Dockerfile in dev, skip in prod
-    build:
+  frontend:  # ← Service name stays as "frontend"
+    build:   # ← Make sure this is here!
       context: .
       dockerfile: packages/react/Dockerfile
-    # Use local image for dev, use remote image in prod
     image: ${FRONTEND_IMAGE:?need FRONTEND_IMAGE}
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
     expose:
       - "80"
-    depends_on:
-      - backend
+    labels:
+      - "traefik.enable=true"
+      
+      # HTTP router for localhost
+      - "traefik.http.routers.main-site-http.rule=Host(`localhost`)"
+      - "traefik.http.routers.main-site-http.entrypoints=web"
+      - "traefik.http.routers.main-site-http.service=main-site"
+      
+      # HTTPS router for production
+      - "traefik.http.routers.main-site-https.rule=Host(`${DOMAIN:?need DOMAIN}`) || Host(`www.${DOMAIN}`)"
+      - "traefik.http.routers.main-site-https.entrypoints=websecure"
+      - "traefik.http.routers.main-site-https.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.main-site-https.service=main-site"
+      
+      # Service definition
+      - "traefik.http.services.main-site.loadbalancer.server.port=80"
+    
     restart: unless-stopped
     networks:
-      internal:
       web:
-        # Define a network alias for easier access to the frontend service
         aliases:
-          - "${APP_NAME:?need APP_NAME}"
+          - ${APP_NAME:?need APP_NAME}
 
 networks:
-  # Internal network for inter-service communication
-  internal:
-    driver: bridge
-  # External network for exposing services to other containers
   web:
     external: true

@@ -1,5 +1,4 @@
 services:
   frontend:
-    # Allow access to frontend container via specified public port, no public access in prod
     ports:
       - "${DEV_PUBLIC_PORT:-8080}:80"

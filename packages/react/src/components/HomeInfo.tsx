@@ -4,7 +4,7 @@ function HomeInfo() {
       <h1 className="text-3xl md:text-4xl font-semibold text-center mb-8">
         Temp Home Page
       </h1>
-      <a href="template.ericgi231.me" target="_blank" rel="noopener noreferrer" className="mb-8">Template link</a>
+      <a href="https://template.ericgi231.me" rel="noopener noreferrer" className="mb-8">Template link</a>
     </div>
   )
 }

@@ -3,5 +3,5 @@ dist/
 .vscode/
 .env
 copilot-instructions.md
-./letsencrypt/*
-./data/*
+letsencrypt/
+data/

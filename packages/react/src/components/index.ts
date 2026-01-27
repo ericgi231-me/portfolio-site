@@ -1,2 +1,6 @@
 export { default as Header } from './Header'
-export { default as HomeInfo } from './HomeInfo'
+export { default as ProjectGrid } from './ProjectGrid'
+export { default as NameAndLinks } from './NameAndLinks'
+export { default as MyInfo } from './MyInfo'
+export { default as ThemeProvider } from './ThemeProvider'
+export { default as BackgroundImages } from './BackgroundImages'

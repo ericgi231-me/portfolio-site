@@ -1,17 +1,22 @@
 import { Route, Routes } from 'react-router-dom'
-import { HomePage, NotFoundPage } from './pages'
-import { Header } from './components'
+import { NotFoundPage, ProjectsPage, GuestBookPage, AboutMePage } from './pages'
+import { Header, BackgroundImages } from './components'
 
-function App() {
+const App = () => {
   return (
-    <>
-      <Header />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </>
+    <div className="min-h-screen relative">
+      <BackgroundImages />
+      <div className="relative z-10">
+        <Header />
+        <Routes>
+          <Route path="/" element={<ProjectsPage />} />
+          <Route path="/about" element={<AboutMePage />} />
+          <Route path="/guestbook" element={<GuestBookPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </div>
+    </div>
   )
 }
 
-export default App
+export default App;

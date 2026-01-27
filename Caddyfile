@@ -16,10 +16,11 @@ ericgi231.me {
   reverse_proxy portfolio-site:80
 }
 
-www.ericgi231.me {
-  redir https://ericgi231.me{uri} permanent
-}
-
 template.ericgi231.me {
   reverse_proxy webapp-template:80
+}
+
+# Extra
+www.ericgi231.me {
+  redir https://ericgi231.me{uri} permanent
 }

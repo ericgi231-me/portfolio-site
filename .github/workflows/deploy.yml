@@ -92,7 +92,6 @@ jobs:
           source: "docker-compose.yml,Caddyfile,packages/database/"
           target: "~/apps/${{ env.APP_NAME }}"
           strip_components: 0
-          overwrite: true
 
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3

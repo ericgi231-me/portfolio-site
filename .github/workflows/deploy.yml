@@ -39,8 +39,8 @@ jobs:
       - name: Build and push backend
         uses: docker/build-push-action@v5
         with:
-          context: ./packages/php
-          file: ./packages/php/Dockerfile
+          context: packages/php
+          file: Dockerfile
           push: true
           tags: ${{ env.BACKEND_IMAGE }}
           cache-from: type=gha

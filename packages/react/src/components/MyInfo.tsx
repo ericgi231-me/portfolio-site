@@ -28,20 +28,37 @@ const MyInfo = () => {
 
   return (
     <div className="max-w-5xl mx-auto px-lg py-xl pt-sm">
+      <h2 className="text-text text-3xl font-bold mb-md">My Work</h2>
       <div className="bg-surface border border-border rounded-lg p-lg mb-lg shadow-md">
         <p className="text-lg text-text leading-relaxed">
-          I'm a Software Development Engineer with 6+ years of experience building scalable, distributed systems. 
-          Most recently, I spent 2+ years at Amazon architecting compliance automation systems and modernizing 
-          infrastructure, where I led projects handling 50k+ daily events across multi-region deployments. 
-          Previously at Asure Software, I solved complex multi-tenant data modeling challenges and improved 
-          application performance by 60%. Currently, I'm maintaining technical currency through active project 
-          work while managing family caregiving responsibilities, building modern web applications with React, 
-          TypeScript, and AWS services.
+          I've been coding since 2015 and a professional software developer since 2021. 
+          My most recent job at Amazon gave me a great deal of experience working with AWS services, creating complex serverless architecture.
+          I learned to love the full software development lifecycle from design to deployment and monitoring. 
+          The reason I make software is for the users, I always love to hear feedback from real people using my apps! 
+        </p>
+      </div>
+
+      <h2 className="text-text text-3xl font-bold mb-md">My Life</h2>
+      <div className="bg-surface border border-border rounded-lg p-lg mb-lg shadow-md">
+        <p className="text-lg text-text leading-relaxed">
+          While I spend a lot of time coding, that does not stop me from enjoying my other hobbies. 
+          To name a few: scuba diving, log rolling, fish keeping, video games, swimming, and camping. 
+          Aside from that I have also been pursuing a private pilots license and volunteering with the Boy Scouts of America.
+        </p>
+        <p className="text-text">Photos TBA: Scuba Diving, Flying, Fish Tank</p>
+      </div>
+
+      <h2 className="text-text text-3xl font-bold mb-md">This Site</h2>
+      <div className="bg-surface border border-border rounded-lg p-lg mb-lg shadow-md">
+        <p className="text-lg text-text leading-relaxed">
+          This site and the apps I build are mostly created using React and a mix of php, Node.js, and python. 
+          Every app is containerized and deployed to my locally owned ubuntu server via a github actions CI/CD pipeline. 
+          I utilize Caddy and nginx to proxy requests securely between a network of containers. 
+          I have grown to really appreciate this microservices architecture that allows me to quickly build, test, and deploy new apps using whatever new technologies I want to try out. 
         </p>
       </div>
 
       <h2 className="text-text text-3xl font-bold mb-md">Technical Skills</h2>
-      
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {skillCategories.map((category) => (
           <div 

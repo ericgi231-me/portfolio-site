@@ -46,10 +46,10 @@ const GuestBookPage = () => {
       const data = await response.json();
 
       if (response.ok) {
-        setStatus('✓ Entry added successfully!');
+        setStatus('✓ Name added!');
         setName('');
         setMessage('');
-        fetchEntries(); // Refresh the list
+        fetchEntries();
       } else {
         setStatus(`✗ Error: ${data.error}`);
       }
@@ -72,95 +72,72 @@ const GuestBookPage = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-lg py-xl">
-      <h1 className="text-4xl font-bold text-center mb-lg">Guest Book</h1>
-
-      {/* Form */}
-      <div className="bg-surface border border-border rounded-lg p-lg mb-xl shadow-md">
-        <h2 className="text-2xl font-bold mb-md">Sign the Guest Book</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="name" className="block text-text mb-2 font-medium">
-              Name
-            </label>
+      <div className="bg-surface border border-border rounded-lg shadow-md overflow-hidden">
+        {/* Compact Sign Form */}
+        <div className="border-b border-border p-md bg-background-alt">
+          <form onSubmit={handleSubmit} className="flex gap-2 items-start">
             <input
-              id="name"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               maxLength={100}
               required
-              className="w-full px-4 py-2 border border-border rounded-md bg-background text-text focus:outline-none focus:ring-2 focus:ring-primary"
-              placeholder="Your name"
+              className="w-32 px-3 py-2 border border-border rounded-md bg-background text-text focus:outline-none focus:ring-1 focus:ring-primary text-sm"
+              placeholder="Name"
             />
-          </div>
-
-          <div>
-            <label htmlFor="message" className="block text-text mb-2 font-medium">
-              Message
-            </label>
-            <textarea
-              id="message"
+            <input
+              type="text"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               maxLength={256}
               required
-              rows={4}
-              className="w-full px-4 py-2 border border-border rounded-md bg-background text-text focus:outline-none focus:ring-2 focus:ring-primary resize-none"
-              placeholder="Leave your message (max 256 characters)"
+              className="flex-1 px-3 py-2 border border-border rounded-md bg-background text-text focus:outline-none focus:ring-1 focus:ring-primary text-sm"
+              placeholder="Leave a message (max 256 characters)"
             />
-            <p className="text-text-secondary text-sm mt-1">
-              {message.length}/256 characters
-            </p>
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-primary text-white py-3 rounded-md font-bold hover:bg-primary-dark transition-[background-color] disabled:opacity-50 disabled:cursor-not-allowed"
-            style={{ transitionDuration: 'var(--transition-base)' }}
-          >
-            {loading ? 'Submitting...' : 'Submit Entry'}
-          </button>
-
+            <button
+              type="submit"
+              disabled={loading}
+              className="px-6 py-2 bg-primary text-white rounded-md font-medium hover:bg-primary-dark transition-[background-color] disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap text-sm"
+              style={{ transitionDuration: 'var(--transition-base)' }}
+            >
+              {loading ? 'Signing...' : 'Sign'}
+            </button>
+          </form>
           {status && (
-            <p className={`text-center font-medium ${
+            <p className={`text-sm mt-2 ${
               status.startsWith('✓') ? 'text-accent' : 'text-red-500'
             }`}>
               {status}
             </p>
           )}
-        </form>
-      </div>
+        </div>
 
-      {/* Entries List */}
-      <div>
-        <h2 className="text-2xl font-bold mb-md">
-          Entries ({entries.length})
-        </h2>
-        
-        {entries.length === 0 ? (
-          <div className="bg-surface border border-border rounded-lg p-lg text-center text-text-secondary">
-            No entries yet. Be the first to sign!
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {entries.map((entry) => (
-              <div
-                key={entry.id}
-                className="bg-surface border border-border rounded-lg p-md shadow-sm hover:shadow-md transition-shadow"
-                style={{ transitionDuration: 'var(--transition-base)' }}
-              >
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-lg font-bold text-text">{entry.name}</h3>
-                  <span className="text-sm text-text-secondary">
-                    {formatDate(entry.time_stamp)}
-                  </span>
+        {/* Entries List */}
+        <div className="p-md">
+          
+          {entries.length === 0 ? (
+            <div className="text-center text-text-secondary py-8">
+              No entries yet. Be the first to sign!
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {entries.map((entry) => (
+                <div
+                  key={entry.id}
+                  className="border-b border-border pb-3 last:border-0 last:pb-0"
+                >
+                  <div className="flex justify-between items-baseline mb-1">
+                    <h3 className="font-bold text-text">{entry.name}</h3>
+                    <span className="text-xs text-text-secondary">
+                      {formatDate(entry.time_stamp)}
+                    </span>
+                  </div>
+                  <p className="text-text text-sm leading-relaxed">{entry.message}</p>
                 </div>
-                <p className="text-text leading-relaxed">{entry.message}</p>
-              </div>
-            ))}
-          </div>
-        )}
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

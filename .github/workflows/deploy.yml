@@ -39,7 +39,7 @@ jobs:
       - name: Build and push backend
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./packages/php
           file: ./packages/php/Dockerfile
           push: true
           tags: ${{ env.BACKEND_IMAGE }}
@@ -92,6 +92,7 @@ jobs:
           source: "docker-compose.yml,Caddyfile,packages/database/"
           target: "~/apps/${{ env.APP_NAME }}"
           strip_components: 0
+          overwrite: true
 
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3

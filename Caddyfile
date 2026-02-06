@@ -2,25 +2,30 @@
   email ericgi231@gmail.com
 }
 
-# Development (no HTTPS)
 http://localhost {
   reverse_proxy portfolio-site:80
 }
 
-http://template.localhost {
-  reverse_proxy webapp-template:80
-}
-
-# Production (with HTTPS)
 ericgi231.me {
   reverse_proxy portfolio-site:80
+}
+
+www.ericgi231.me {
+  redir https://ericgi231.me{uri} permanent
 }
 
 template.ericgi231.me {
   reverse_proxy webapp-template:80
 }
 
-# Extra
-www.ericgi231.me {
-  redir https://ericgi231.me{uri} permanent
+http://template.localhost {
+  reverse_proxy webapp-template:80
+}
+
+mora-jai.ericgi231.me {
+  reverse_proxy mora-jai-boxes:80
+}
+
+http://mora-jai.localhost {
+  reverse_proxy mora-jai-boxes:80
 }

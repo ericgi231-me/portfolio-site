@@ -1,7 +1,7 @@
 {
-  "name": "webapp-template",
+  "name": "portfolio-site",
   "version": "1.0.0",
-  "description": "Full-stack web application template",
+  "description": "Portfolio site for showcasing projects and skills",
   "private": true,
   "packageManager": "npm@10.0.0",
   "workspaces": [

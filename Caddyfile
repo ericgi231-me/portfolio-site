@@ -29,3 +29,11 @@ mora-jai.ericgi231.me {
 http://mora-jai.localhost {
   reverse_proxy mora-jai-boxes:80
 }
+
+mewgenics.ericgi231.me {
+  reverse_proxy mewgenics-mega-site:80
+}
+
+http://mewgenics.localhost {
+  reverse_proxy mewgenics-mega-site:80
+}

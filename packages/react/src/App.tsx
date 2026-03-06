@@ -1,8 +1,18 @@
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import { NotFoundPage, ProjectsPage, GuestBookPage, AboutMePage } from './pages'
 import { Header, BackgroundImages } from './components'
+import ReactGA from "react-ga4";
+import { useEffect } from 'react';
+
+ReactGA.initialize("G-VTTP7LRNBH");
 
 const App = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    ReactGA.send({ hitType: "pageview", page: location.pathname });
+  }, [location]);
+
   return (
     <div className="min-h-screen relative">
       <BackgroundImages />

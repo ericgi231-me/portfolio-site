@@ -37,3 +37,11 @@ mewgenics.ericgi231.me {
 http://mewgenics.localhost {
   reverse_proxy mewgenics-mega-site:80
 }
+
+files.ericgi231.me {
+  reverse_proxy public-file-share:80
+}
+
+http://files.localhost {
+  reverse_proxy public-file-share:80
+}

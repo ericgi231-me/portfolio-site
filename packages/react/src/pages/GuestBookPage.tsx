@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 interface GuestbookEntry {
   id: number;
   name: string;
-  message: string;
+  message: string | null;
   time_stamp: string;
 }
 
@@ -90,9 +90,8 @@ const GuestBookPage = () => {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               maxLength={256}
-              required
               className="flex-1 px-3 py-2 border border-border rounded-md bg-background text-text focus:outline-none focus:ring-1 focus:ring-primary text-sm"
-              placeholder="Leave a message (max 256 characters)"
+              placeholder="Leave a message (optional, max 256 characters)"
             />
             <button
               type="submit"
@@ -132,7 +131,9 @@ const GuestBookPage = () => {
                       {formatDate(entry.time_stamp)}
                     </span>
                   </div>
-                  <p className="text-text text-sm leading-relaxed">{entry.message}</p>
+                  {entry.message ? (
+                    <p className="text-text text-sm leading-relaxed">{entry.message}</p>
+                  ) : null}
                 </div>
               ))}
             </div>

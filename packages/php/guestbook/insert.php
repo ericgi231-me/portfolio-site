@@ -13,32 +13,39 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // Get posted data
 $data = json_decode(file_get_contents("php://input"));
 
+$name = isset($data->name) ? trim($data->name) : '';
+$message = isset($data->message) ? trim($data->message) : null;
+
 // Validate input
-if (empty($data->name) || empty($data->message)) {
+if ($name === '') {
     http_response_code(400);
-    echo json_encode(["error" => "Name and message are required"]);
+    echo json_encode(["error" => "Name is required"]);
     exit();
 }
 
 // Validate lengths
-if (strlen($data->name) > 100) {
+if (strlen($name) > 100) {
     http_response_code(400);
     echo json_encode(["error" => "Name must be 100 characters or less"]);
     exit();
 }
 
-if (strlen($data->message) > 256) {
+if ($message !== null && strlen($message) > 256) {
     http_response_code(400);
     echo json_encode(["error" => "Message must be 256 characters or less"]);
     exit();
+}
+
+if ($message === '') {
+    $message = null;
 }
 
 try {
     $query = "INSERT INTO guestbook (name, message) VALUES (:name, :message)";
     $stmt = $db->prepare($query);
     
-    $stmt->bindParam(':name', $data->name);
-    $stmt->bindParam(':message', $data->message);
+    $stmt->bindParam(':name', $name);
+    $stmt->bindParam(':message', $message);
     
     if ($stmt->execute()) {
         http_response_code(201);

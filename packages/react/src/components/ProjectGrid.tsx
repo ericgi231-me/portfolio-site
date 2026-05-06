@@ -1,8 +1,8 @@
 const ProjectGrid = () => {
   const projects: { name: string, description: string, link: string, color: string }[] = [
-    { name: 'File Share', description: 'Public file sharing board, no account required', link: 'https://files.ericgi231.me', color: 'bg-green-600' },
+    { name: 'File Share (Meme Collection)', description: 'Public file sharing board, no account required', link: 'https://files.ericgi231.me', color: 'bg-green-600' },
     { name: 'Mora Jai Boxes Online', description: 'Every Mora Jai box from Blue Prince recreated online', link: 'https://mora-jai.ericgi231.me', color: 'bg-blue-400' },
-    { name: 'Animal Race Bets', description: 'A multiplayer animal race betting game', link: 'https://animal-race.ericgi231.me', color: 'bg-orange-600' },
+    { name: 'Animal Race Bets (Down)', description: 'A multiplayer animal race betting game', link: 'https://animal-race.ericgi231.me', color: 'bg-orange-600' },
     { name: 'Mewgenics Companion App', description: 'Companion app for Mewgenics', link: 'https://mewgenics.ericgi231.me', color: 'bg-purple-600' },
   ];
 

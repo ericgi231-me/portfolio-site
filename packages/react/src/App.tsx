@@ -6,10 +6,12 @@ import { useEffect } from 'react';
 
 ReactGA.initialize("G-VTTP7LRNBH");
 
-const ExternalRedirect = ({ to }: { to: string }) => {
+const FILES_URL = 'https://files.ericgi231.me/'
+
+const GodRedirect = () => {
   useEffect(() => {
-    window.location.replace(to);
-  }, [to]);
+    window.location.replace(FILES_URL);
+  }, []);
 
   return null;
 }
@@ -30,7 +32,7 @@ const App = () => {
           <Route path="/" element={<ProjectsPage />} />
           <Route path="/about" element={<AboutMePage />} />
           <Route path="/guestbook" element={<GuestBookPage />} />
-          <Route path="/god" element={<ExternalRedirect to="https://files.ericgi231.me/" />} />
+          <Route path="/god" element={<GodRedirect />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>

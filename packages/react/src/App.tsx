@@ -13,7 +13,17 @@ const FilesRedirect = () => {
     window.location.replace(FILES_URL);
   }, []);
 
-  return null;
+  return (
+    <main className="p-4">
+      <p>
+        Redirecting to the files site...
+        {' '}
+        <a className="underline" href={FILES_URL}>
+          Continue manually
+        </a>
+      </p>
+    </main>
+  );
 };
 
 const App = () => {
